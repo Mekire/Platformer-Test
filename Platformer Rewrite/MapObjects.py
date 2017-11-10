@@ -34,7 +34,7 @@ class Block(mapObject):
     def __init__(self,x,y):
         mapObject.__init__(self,x,y,self.texture)
 
-    def collideWith(self,player):
+    def collideWith(self,player,i):
 
         # collisions = []
         # collisions.append(player.rect.collidepoint(self.rect.topleft))
@@ -54,12 +54,9 @@ class Block(mapObject):
         #High enough up/down velocity results in passing through blocks
         #Sideways collisions don't work at all
 
-        if player.rect.top < self.rect.top:
-            player.rect.bottom = self.rect.top
+        if i:
             player.yVel = 0
-        if player.rect.bottom > self.rect.bottom:
-            player.rect.top = self.rect.bottom
-            player.yVel = 0
-
-
-
+        if player.rect[i] < self.rect[i]:
+            player.rect[i] = self.rect[i]-player.rect.size[i]
+        else:
+            player.rect[i] = self.rect[i]+self.rect.size[i]

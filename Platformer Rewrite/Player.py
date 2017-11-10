@@ -16,7 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH / 2, HEIGHT / 2)
 
-    def update(self):
+    def update(self, obstacles):
         if self.yVel < self.maxVel:
             self.yVel += GRAVITY
 
@@ -25,7 +25,9 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = HEIGHT
 
         self.rect.x += self.xVel
+        self.collisionCheck(obstacles, 0)
         self.rect.y += self.yVel
+        self.collisionCheck(obstacles, 1)
 
     def control(self,control,modifier):
         if control == "SPACE" and modifier == 1 and self.jumpsLeft > 0:
@@ -38,8 +40,7 @@ class Player(pygame.sprite.Sprite):
         elif control == "S" and modifier == 1:
             self.yVel = 1
 
-    def collisionCheck(self,group):
+    def collisionCheck(self, group, i):
         collisions = pygame.sprite.spritecollide(self,group,False)
         for objects in collisions:
-            objects.collideWith(self)
-
+            objects.collideWith(self, i)

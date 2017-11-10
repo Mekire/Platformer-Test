@@ -62,8 +62,7 @@ def gameLoop():
                 if event.key in CONTROLS:
                     sprPlayer.control(CONTROLS[event.key], -1)
 
-        allSprites.update()
-        sprPlayer.collisionCheck(plats)
+        allSprites.update(plats)
 
         SCREEN.fill(GREY)
         allSprites.draw(SCREEN)
